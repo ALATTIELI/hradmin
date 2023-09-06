@@ -1,0 +1,66 @@
+/* Base styling for all devices */
+
+.order-details {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 800px;
+}
+
+.order-details h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.order-details p {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.order-details ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.order-details li {
+    font-size: 16px;
+    margin-bottom: 8px;
+    background-color: #e8e8e8;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+/* Responsive adjustments */
+
+/* For tablets */
+@media (min-width: 768px) {
+    .order-details {
+        padding: 40px;
+    }
+
+    .order-details h2 {
+        font-size: 28px;
+    }
+
+    .order-details p, .order-details li {
+        font-size: 20px;
+    }
+}
+
+/* For desktop */
+@media (min-width: 1024px) {
+    .order-details {
+        padding: 50px;
+    }
+
+    .order-details h2 {
+        font-size: 32px;
+    }
+
+    .order-details p, .order-details li {
+        font-size: 22px;
+    }
+}

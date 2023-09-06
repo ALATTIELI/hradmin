@@ -1,9 +1,12 @@
+// store.ts
 import { configureStore } from '@reduxjs/toolkit';
-import authReducer from './authSlice'; // Adjust path if necessary
+import authReducer from './authSlice';
+import orderReducer from './orderSlice';
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
+    orders: orderReducer,
   },
 });
 

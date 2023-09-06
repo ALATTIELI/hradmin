@@ -7,6 +7,8 @@ import Dashboard from './Dashboard';
 import { useSelector } from 'react-redux';
 import { RootState } from './store';
 import Settings from './Settings';
+import Stockorder from './Stockorder';
+import OrderDetails from './OrderDetails';
 
 const ProtectedRoute: React.FC = () => {
   const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
@@ -21,7 +23,9 @@ const AppRoutes: React.FC = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/settings" element={<Settings />} />
-        <Route path="/Help" element={<Settings />} />
+        <Route path="/Stock-order" element={<Stockorder />} />
+        <Route path="/stock-order/:orderId" element={<OrderDetails />} />
+
 
       {/* ... other routes if needed ... */}
     </Routes>

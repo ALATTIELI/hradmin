@@ -44,10 +44,10 @@ function Dashboard() {
       currentUser.photo = user.photoUrl;
     }
   }
-  else {
-    //change url to /       
-    window.location.href='/login';
-  }
+//   else {
+//     //change url to /       
+//     window.location.href='/login';
+//   }
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
