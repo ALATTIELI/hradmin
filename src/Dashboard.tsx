@@ -4,6 +4,7 @@ import { RootState } from './store';       // <-- Ensure this is the correct pat
 import employeesData from './EmployeesData';
 import Sidebar from './Sidebar';
 import TopBar from './Topbar';
+import './Dashboard.css'
 
 // Define a type for the employee
 type Employee = {
@@ -31,15 +32,21 @@ function Dashboard() {
   // Default values
   let currentUser = {
     name: 'Unknown',
-    photo: '/path/to/default/photo.jpg'
+    photo: '/path/to/default/photo.jpg',
+    position: 'Guest'  // Default value for position
   };
 
   // If user exists, override the default values
   if (user) {
-    currentUser.name = `${user.firstName} ${user.lastName} ${user.position}`;
+    currentUser.name = `${user.firstName} ${user.lastName}`;
+    currentUser.position = user.position;  // Include this line
     if (user.photoUrl) {
       currentUser.photo = user.photoUrl;
     }
+  }
+  else {
+    //change url to /       
+    window.location.href='/login';
   }
 
   const toggleSidebar = () => {
@@ -57,6 +64,22 @@ function Dashboard() {
         />
         <div className="main-content">
           {/* Main content */}
+          <div className="box employees">
+              <h2>Employees</h2>
+              {/* Employee content here */}
+          </div>
+          <div className="box tasks">
+              <h2>Tasks/Projects</h2>
+              {/* Tasks or projects content here */}
+          </div>
+          <div className="box notifications">
+              <h2>Notifications/Updates</h2>
+              {/* Notifications content here */}
+          </div>
+          <div className="box performance">
+              <h2>Performance Metrics</h2>
+              {/* Performance metrics content here */}
+          </div>
         </div>
       </div>
     </div>
