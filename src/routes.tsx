@@ -9,6 +9,7 @@ import { RootState } from './store';
 import Settings from './Settings';
 import Stockorder from './Stockorder';
 import OrderDetails from './OrderDetails';
+import WarrantyView from './WarrantyItems';
 
 const ProtectedRoute: React.FC = () => {
   const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
@@ -25,6 +26,7 @@ const AppRoutes: React.FC = () => {
         <Route path="/settings" element={<Settings />} />
         <Route path="/Stock-order" element={<Stockorder />} />
         <Route path="/stock-order/:orderId" element={<OrderDetails />} />
+        <Route path="/Warranty-Items" element={<WarrantyView />} />
 
 
       {/* ... other routes if needed ... */}

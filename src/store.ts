@@ -2,11 +2,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './authSlice';
 import orderReducer from './orderSlice';
+import warrantySlice from './warrantySlice';
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
     orders: orderReducer,
+    warranty: warrantySlice,
   },
 });
 
