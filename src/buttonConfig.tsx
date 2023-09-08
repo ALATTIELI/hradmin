@@ -3,12 +3,12 @@ export type ButtonConfiguration = {
     buttons: string[];
 };
 
-export const commonButtons = ["Profile", "Notifications", "Help"];
+export const commonButtons = [ ];
 
 export const positionButtons: ButtonConfiguration[] = [
     {
       position: "Software Engineer",
-      buttons: ["Reports", "Stock Order", "Warranty Items", "Borrow Items", "Device Maintenance"]
+      buttons: ["Stock Order", "Warranty Items", "Borrow Items", "Device Maintenance"]
     },
     {
       position: "Product Manager",

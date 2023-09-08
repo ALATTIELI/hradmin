@@ -1,25 +1,25 @@
 import React, { useState } from "react";
-import './DeviceMaintenance.css'
+import "./DeviceMaintenance.css";
 import { useSelector } from "react-redux";
 import employeesData from "./EmployeesData";
 import Sidebar from "./Sidebar";
 import TopBar from "./Topbar";
 import { RootState } from "./store";
 
-
 type Employee = {
-    id: number;
-    firstName: string;
-    lastName: string;
-    username: string;
-    password: string;
-    position: string;
-    department: string;
-    dateJoined: string;
-    photoUrl?: string;
-  };
+  id: number;
+  firstName: string;
+  lastName: string;
+  username: string;
+  password: string;
+  position: string;
+  department: string;
+  dateJoined: string;
+  photoUrl?: string;
+};
 
 type DeviceMaintenanceData = {
+  branchName: string;
   customerName: string;
   phoneNumber: string;
   device: string;
@@ -34,6 +34,7 @@ const DeviceMaintenance: React.FC = () => {
   // Mock data
   const mockRequests: DeviceMaintenanceData[] = [
     {
+      branchName: "Branch A",
       customerName: "John Doe",
       phoneNumber: "1234567890",
       device: "iPhone 12",
@@ -44,6 +45,7 @@ const DeviceMaintenance: React.FC = () => {
       description: "Software malfunctioning after the last update.",
     },
     {
+      branchName: "Branch B",
       customerName: "Jane Smith",
       phoneNumber: "9876543210",
       device: "Samsung S21",
@@ -58,33 +60,35 @@ const DeviceMaintenance: React.FC = () => {
   const [requests] = useState<DeviceMaintenanceData[]>(mockRequests);
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  
+
   // Fetch the logged-in user's username from Redux store
   const loggedInUser = useSelector((state: RootState) => state.auth.user);
   const loggedInUsername = loggedInUser ? loggedInUser.username : null;
-  
+
   // Find the user in employeesData using the fetched username
-  const user: Employee | undefined = loggedInUsername ? employeesData.employees.find(emp => emp.username === loggedInUsername) : undefined;
+  const user: Employee | undefined = loggedInUsername
+    ? employeesData.employees.find((emp) => emp.username === loggedInUsername)
+    : undefined;
 
   // Default values
   let currentUser = {
-    name: 'Unknown',
-    photo: '/path/to/default/photo.jpg',
-    position: 'Guest'  // Default value for position
+    name: "Unknown",
+    photo: "/path/to/default/photo.jpg",
+    position: "Guest", // Default value for position
   };
 
   // If user exists, override the default values
   if (user) {
     currentUser.name = `${user.firstName} ${user.lastName}`;
-    currentUser.position = user.position;  // Include this line
+    currentUser.position = user.position; // Include this line
     if (user.photoUrl) {
       currentUser.photo = user.photoUrl;
     }
   }
-//   else {
-//     //change url to /       
-//     window.location.href='/login';
-//   }
+  //   else {
+  //     //change url to /
+  //     window.location.href='/login';
+  //   }
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -92,16 +96,17 @@ const DeviceMaintenance: React.FC = () => {
 
   return (
     <div className="Device-Maintenance-container">
-        <TopBar toggleSidebar={toggleSidebar} />
-        <Sidebar 
-          currentUser={currentUser} 
-          toggleSidebar={toggleSidebar} 
-          className={isSidebarOpen ? 'open' : ''} 
-        />
+      <TopBar toggleSidebar={toggleSidebar} />
+      <Sidebar
+        currentUser={currentUser}
+        toggleSidebar={toggleSidebar}
+        className={isSidebarOpen ? "open" : ""}
+      />
       <h2>Device Maintenance</h2>
       <table>
         <thead>
           <tr>
+            <th>Branch Name</th>
             <th>Customer Name</th>
             <th>Phone Number</th>
             <th>Device</th>
@@ -115,6 +120,7 @@ const DeviceMaintenance: React.FC = () => {
         <tbody>
           {requests.map((request, index) => (
             <tr key={index}>
+              <td>{request.branchName}</td>
               <td>{request.customerName}</td>
               <td>{request.phoneNumber}</td>
               <td>{request.device}</td>
