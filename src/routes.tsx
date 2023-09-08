@@ -11,6 +11,7 @@ import Stockorder from './Stockorder';
 import OrderDetails from './OrderDetails';
 import WarrantyView from './WarrantyItems';
 import BorrowRequest from './BorrowItems';
+import DeviceMaintenance from './DeviceMaintenance';
 
 const ProtectedRoute: React.FC = () => {
   const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
@@ -29,6 +30,7 @@ const AppRoutes: React.FC = () => {
         <Route path="/stock-order/:orderId" element={<OrderDetails />} />
         <Route path="/Warranty-Items" element={<WarrantyView />} />
         <Route path="/Borrow-Items" element={<BorrowRequest />} />
+        <Route path="/Device-Maintenance" element={<DeviceMaintenance />} />
 
 
       {/* ... other routes if needed ... */}
