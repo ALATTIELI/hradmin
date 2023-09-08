@@ -1,9 +1,10 @@
+
 export type ButtonConfiguration = {
     position: string;
     buttons: string[];
 };
 
-export const commonButtons = [ ];
+export const commonButtons = [ "Dashboard", "Settings"];
 
 export const positionButtons: ButtonConfiguration[] = [
     {

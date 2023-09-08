@@ -36,12 +36,6 @@ function Sidebar({ currentUser, className }: SidebarProps) {
         <span>{currentUser.name}</span>
       </div>
       <div className="menu-items">
-        <Link to="/dashboard">
-          <button>Dashboard</button>
-        </Link>
-        <Link to="/settings">
-          <button>Settings</button>
-        </Link>
 
         {commonButtons.map((buttonLabel) => (
           <Link to={`/${buttonLabel.toLowerCase()}`} key={buttonLabel}>
