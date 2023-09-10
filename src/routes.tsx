@@ -13,6 +13,8 @@ import WarrantyView from './WarrantyItems';
 import BorrowRequest from './BorrowItems';
 import DeviceMaintenance from './DeviceMaintenance';
 import EmployeeManagement from './EmployeeManagement'; // <-- Import the new component
+import AddProduct from './AddProduct';
+import OrderList from './OrderList';
 
 
 const ProtectedRoute: React.FC = () => {
@@ -29,11 +31,14 @@ const AppRoutes: React.FC = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/Stock-order" element={<Stockorder />} />
-        <Route path="/stock-order/:orderId" element={<OrderDetails />} />
+        <Route path="/Order-list/:orderId" element={<OrderDetails />} />
         <Route path="/Warranty-Items" element={<WarrantyView />} />
         <Route path="/Borrow-Items" element={<BorrowRequest />} />
         <Route path="/Device-Maintenance" element={<DeviceMaintenance />} />
         <Route path="/Employee-Management" element={<EmployeeManagement />} /> {/* <-- Add this line */}
+        <Route path="/Add-Product" element={<AddProduct />} />
+        <Route path="/Order-list" element={<OrderList />} />
+
 
 
 

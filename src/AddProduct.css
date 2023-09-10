@@ -1,0 +1,66 @@
+/* AddProduct.css */
+
+.add-product {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    font-family: 'Arial', sans-serif;
+}
+
+.add-product h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.add-product form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.add-product input, .add-product textarea, .add-product button {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 100%;
+}
+
+.add-product button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.add-product button:hover {
+    background-color: #0056b3;
+}
+
+/* Responsive design adjustments */
+@media only screen and (max-width: 600px) {
+    .add-product {
+        margin: 20px 10px;
+        padding: 15px;
+    }
+
+    .add-product h2 {
+        font-size: 18px;
+    }
+
+    .add-product input, .add-product textarea, .add-product button {
+        font-size: 14px;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .add-product h2 {
+        font-size: 16px;
+    }
+
+    .add-product input, .add-product textarea, .add-product button {
+        font-size: 12px;
+    }
+}
