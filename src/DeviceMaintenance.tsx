@@ -59,7 +59,7 @@ const DeviceMaintenance: React.FC = () => {
 
   const [requests] = useState<DeviceMaintenanceData[]>(mockRequests);
 
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   // Fetch the logged-in user's username from Redux store
   const loggedInUser = useSelector((state: RootState) => state.auth.user);

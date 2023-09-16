@@ -31,7 +31,7 @@ type Stockorder = {
 
 function Stockorder() {
   const [] = useState<Stockorder | null>(null);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [] = useState(false); // New state to track visibility of orders list
 
   // Fetch the logged-in user's username from Redux store

@@ -29,7 +29,7 @@ type Employee = {
 const branches = ["Branch A", "Branch B", "Branch C"];
 
 function WarrantyView() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [selectedBranch, setSelectedBranch] = useState<string | null>(null); // Define the missing state variables
 
   const loggedInUser = useSelector((state: RootState) => state.auth.user);

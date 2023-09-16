@@ -71,7 +71,7 @@ function EmployeeManagement() {
     // Here, you can send the employeeData to a backend API or store it in any state management tool if needed
   };
 
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   // Fetch the logged-in user's username from Redux store
   const loggedInUser = useSelector((state: RootState) => state.auth.user);

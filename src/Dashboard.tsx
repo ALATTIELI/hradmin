@@ -21,7 +21,7 @@ type Employee = {
 };
 
 function Dashboard() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   // Fetch the logged-in user's username from Redux store
   const loggedInUser = useSelector((state: RootState) => state.auth.user);
