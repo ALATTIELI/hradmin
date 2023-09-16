@@ -1,17 +1,17 @@
 // AdminWarrantyView.tsx
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "./store";
+import { RootState } from "../Redux/store";
 import "./WarrantyItems.css";
 import { useState } from "react";
-import employeesData from "./EmployeesData";
-import Sidebar from "./Sidebar";
-import TopBar from "./Topbar";
+import employeesData from "../EmployeeManagement/EmployeesData";
+import Sidebar from "../SideBar/Sidebar";
+import TopBar from "../TopBar/Topbar";
 import {
   setStatusReceived,
   setStatusReplaced,
   setStatusRejected,
   setStatusSentBack,
-} from "./warrantySlice";
+} from "../Redux/warrantySlice";
 
 type Employee = {
   id: number;

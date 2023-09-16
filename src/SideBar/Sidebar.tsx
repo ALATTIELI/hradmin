@@ -1,8 +1,8 @@
 import "./Sidebar.css";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { logout } from "./authSlice";
-import { commonButtons, positionButtons } from "./buttonConfig"; // <-- Import the button config
+import { logout } from "../Redux/authSlice";
+import { commonButtons, positionButtons } from "../buttonConfig"; // <-- Import the button config
 
 // Define the types for the props
 type User = {

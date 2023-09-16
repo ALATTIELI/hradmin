@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import "./DeviceMaintenance.css";
 import { useSelector } from "react-redux";
-import employeesData from "./EmployeesData";
-import Sidebar from "./Sidebar";
-import TopBar from "./Topbar";
-import { RootState } from "./store";
+import employeesData from "../EmployeeManagement/EmployeesData";
+import Sidebar from "../SideBar/Sidebar";
+import TopBar from "../TopBar/Topbar";
+import { RootState } from "../Redux/store";
 
 type Employee = {
   id: number;

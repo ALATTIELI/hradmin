@@ -1,14 +1,13 @@
-import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { RootState } from "./store"; // Ensure path is correct
+// StockOrder.tsx
+import "./Stockorder.css";
 import { useState } from "react";
-import employeesData from "./EmployeesData";
-import Sidebar from "./Sidebar";
-import TopBar from "./Topbar";
-import'./OrderDetails.css';
+import { useSelector } from "react-redux";
+import employeesData from "../EmployeeManagement/EmployeesData";
+import Sidebar from "../SideBar/Sidebar";
+import TopBar from "../TopBar/Topbar";
+import { RootState } from "../Redux/store";
+import { Link } from "react-router-dom";
 
-// Define a type for the employee
 type Employee = {
   id: number;
   firstName: string;
@@ -21,8 +20,19 @@ type Employee = {
   photoUrl?: string;
 };
 
-function OrderDetails() {
+type Stockorder = {
+  id: number;
+  branchName: string;
+  date: string;
+  items: { name: string; quantity: number }[];
+  status: string;
+};
+
+
+function Stockorder() {
+  const [] = useState<Stockorder | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [] = useState(false); // New state to track visibility of orders list
 
   // Fetch the logged-in user's username from Redux store
   const loggedInUser = useSelector((state: RootState) => state.auth.user);
@@ -48,58 +58,28 @@ function OrderDetails() {
       currentUser.photo = user.photoUrl;
     }
   }
-  //   else {
-  //     //change url to /
-  //     window.location.href='/login';
-  //   }
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
-  const { orderId } = useParams<{ orderId?: string }>();
-
-  if (!orderId) {
-    return <div>Invalid Order ID</div>;
-  }
-
-  // Fetch orders from Redux state
-  const orders = useSelector((state: RootState) => state.orders);
-
-  // Find the order using the orderId
-  const order = orders.find((order) => order.id === parseInt(orderId));
-
-  if (!order) {
-    return <div>Order not found!</div>;
-  }
 
   return (
-    <div className="order-details">
+    <div>
       <TopBar toggleSidebar={toggleSidebar} />
       <Sidebar
         currentUser={currentUser}
         toggleSidebar={toggleSidebar}
         className={isSidebarOpen ? "open" : ""}
       />
-      <h2>Order Details</h2>
-      <p>
-        <strong>Branch:</strong> {order.branchName}
-      </p>
-      <p>
-        <strong>Date:</strong> {order.date}
-      </p>
-      <p>
-        <strong>Status:</strong> {order.status}
-      </p>
-      <ul>
-        {order.items.map((item) => (
-          <li key={item.name}>
-            {item.name} - {item.quantity}
-          </li>
-        ))}
-      </ul>
-      <Link to="/stock-order">Back to Orders</Link>
+
+      {/* Buttons to navigate to different pages */}
+      <div className="navigation-buttons">
+        <Link to="/Order-List" className="nav-btn">View Orders List</Link>
+        <Link to="/add-product" className="nav-btn">Add New Product</Link>
+        {/* Add more buttons as needed */}
+      </div>
     </div>
   );
 }
 
-export default OrderDetails;
+export default Stockorder;

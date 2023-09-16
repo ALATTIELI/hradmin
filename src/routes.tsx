@@ -2,19 +2,19 @@
 
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import LoginPage from './Login';
-import Dashboard from './Dashboard';
+import LoginPage from './Login/Login';
+import Dashboard from './SideBar/Dashboard';
 import { useSelector } from 'react-redux';
-import { RootState } from './store';
-import Settings from './Settings';
-import Stockorder from './Stockorder';
-import OrderDetails from './OrderDetails';
-import WarrantyView from './WarrantyItems';
-import BorrowRequest from './BorrowItems';
-import DeviceMaintenance from './DeviceMaintenance';
-import EmployeeManagement from './EmployeeManagement'; // <-- Import the new component
-import AddProduct from './AddProduct';
-import OrderList from './OrderList';
+import { RootState } from './Redux/store';
+import Settings from './SideBar/Settings';
+import Stockorder from './StockOrder/Stockorder';
+import OrderDetails from './StockOrder/OrderDetails';
+import WarrantyView from './WarrantyItems/WarrantyItems';
+import BorrowRequest from './BorrowItems/BorrowItems';
+import DeviceMaintenance from './DeviceMaintenance/DeviceMaintenance';
+import EmployeeManagement from './EmployeeManagement/EmployeeManagement'; // <-- Import the new component
+import AddProduct from './StockOrder/AddProduct';
+import OrderList from './StockOrder/OrderList';
 
 
 const ProtectedRoute: React.FC = () => {

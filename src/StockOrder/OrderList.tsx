@@ -1,10 +1,10 @@
 import React from 'react';
 import { useSelector } from "react-redux";
-import { RootState } from "./store";
+import { RootState } from "../Redux/store";
 import { Link } from "react-router-dom";
-import Sidebar from "./Sidebar";
-import TopBar from "./Topbar";
-import employeesData from "./EmployeesData";
+import Sidebar from "../SideBar/Sidebar";
+import TopBar from "../TopBar/Topbar";
+import employeesData from "../EmployeeManagement/EmployeesData";
 import './OrderList.css';
 
 type Employee = {

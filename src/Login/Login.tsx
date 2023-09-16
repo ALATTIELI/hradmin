@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom"; // <-- Added this import
-import { login } from "./authSlice";
-import employeesData from "./EmployeesData";
+import { login } from "../Redux/authSlice";
+import employeesData from "../EmployeeManagement/EmployeesData";
 import "./Login.css";
 
 const LoginPage: React.FC = () => {

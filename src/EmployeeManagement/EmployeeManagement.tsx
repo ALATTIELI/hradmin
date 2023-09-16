@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import employeesData from "./EmployeesData";
-import Sidebar from "./Sidebar";
-import TopBar from "./Topbar";
-import { RootState } from "./store";
+import Sidebar from "../SideBar/Sidebar";
+import TopBar from "../TopBar/Topbar";
+import { RootState } from "../Redux/store";
 
 type EmployeeData = {
   id: number;

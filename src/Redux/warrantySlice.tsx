@@ -1,5 +1,5 @@
     import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-    import mockWarrantyData from './mockWarrantyData';
+    import mockWarrantyData from '../WarrantyItems/mockWarrantyData';
 
     type WarrantyItem = {
         branch: string;

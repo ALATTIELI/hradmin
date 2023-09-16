@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useSelector } from "react-redux"; // <-- Import this
-import { RootState } from "./store"; // <-- Ensure this is the correct path to your store
-import employeesData from "./EmployeesData";
+import { RootState } from "../Redux/store"; // <-- Ensure this is the correct path to your store
+import employeesData from "../EmployeeManagement/EmployeesData";
 import Sidebar from "./Sidebar";
-import TopBar from "./Topbar";
+import TopBar from "../TopBar/Topbar";
 import "./Dashboard.css";
 import { Link } from "react-router-dom";
 
