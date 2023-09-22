@@ -76,6 +76,9 @@ function Stockorder() {
       <div className="navigation-buttons">
         <Link to="/Order-List" className="nav-btn">View Orders List</Link>
         <Link to="/add-product" className="nav-btn">Add New Product</Link>
+        <Link to="/category" className="nav-btn">Add New Category</Link>
+        <Link to="/brand" className="nav-btn">Add New Brand</Link>
+
         {/* Add more buttons as needed */}
       </div>
     </div>
