@@ -39,12 +39,17 @@
     max-width: 80%; /* Limit its maximum width */
     flex-shrink: 0; /* Allow it to shrink if necessary */
   }
+
+  .notification-icon {
+    margin-left: 10px; /* Add margin to the left to separate from the search bar */
+    background-color: none;
+  }
   
   /* Media Queries for responsiveness */
   
   @media only screen and (max-width: 600px) {
     .searchbar {
-      width: 80%;  /* Adjust the width for mobile devices */
+      width: 60%;  /* Adjust the width for mobile devices */
     }
   }
   

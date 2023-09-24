@@ -1,4 +1,5 @@
-import './Topbar.css'
+import './Topbar.css';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 
 type TopBarProps = {
   toggleSidebar: () => void;
@@ -11,6 +12,9 @@ function TopBar({ toggleSidebar }: TopBarProps) {
         ☰
       </button>
       <input type="text" placeholder="Search..." className="searchbar" />
+      <div className="notification-icon">
+        <NotificationsIcon /> {/* Use NotificationsIcon here */}
+      </div>
     </div>
   );
 }

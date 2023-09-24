@@ -24,7 +24,7 @@
     margin: 10px 0;
     border-radius: 5px;
     transition: background-color 0.3s;
-    position: relative;
+    /* position: relative; */
 }
 
 .order-list li:hover {
@@ -35,8 +35,8 @@
     text-decoration: none;
     color: inherit;
     display: block;
-    position: relative;
-    z-index: 1;
+    /* position: relative; */
+    /* z-index: 1; */
 }
 
 /* Responsiveness for smaller devices */
