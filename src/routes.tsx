@@ -17,6 +17,7 @@ import AddProduct from './StockOrder/AddProduct';
 import OrderList from './StockOrder/OrderList';
 import  Category from './StockOrder/Category';
 import Brand from './StockOrder/Brand';
+import GenerateOfferLetterForm from './OfferLetterGenerator/GenerateOfferLetterForm';
 
 
 
@@ -43,6 +44,7 @@ const AppRoutes: React.FC = () => {
         <Route path="/Order-list" element={<OrderList />} />
         <Route path="/Category" element={<Category />} />
         <Route path="/Brand" element={<Brand />} />
+        <Route path="/offer-letter" element={<GenerateOfferLetterForm />} />
 
 
 
