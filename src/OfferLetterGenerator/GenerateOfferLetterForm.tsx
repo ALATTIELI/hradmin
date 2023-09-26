@@ -1,6 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { jsPDF } from "jspdf";
 import "./GenerateOfferLetterForm.css"
+import { useSelector } from "react-redux";
+import employeesData from "../EmployeeManagement/EmployeesData";
+import { RootState } from "../Redux/store";
+import Sidebar from "../SideBar/Sidebar";
+import TopBar from "../TopBar/Topbar";
+
+
+type Employee = {
+  id: number;
+  firstName: string;
+  lastName: string;
+  username: string;
+  password: string;
+  position: string;
+  department: string;
+  dateJoined: string;
+  photoUrl?: string;
+};
 
 const GenerateOfferLetterForm: React.FC = () => {
   const [candidateName, setCandidateName] = useState<string>("");
@@ -81,9 +99,51 @@ const GenerateOfferLetterForm: React.FC = () => {
     generatePDF();
   };
 
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  // Fetch the logged-in user's username from Redux store
+  const loggedInUser = useSelector((state: RootState) => state.auth.user);
+  const loggedInUsername = loggedInUser ? loggedInUser.username : null;
+
+  // Find the user in employeesData using the fetched username
+  const user: Employee | undefined = loggedInUsername
+    ? employeesData.employees.find((emp) => emp.username === loggedInUsername)
+    : undefined;
+
+  // Default values
+  let currentUser = {
+    name: "Unknown",
+    photo: "/path/to/default/photo.jpg",
+    position: "Guest", // Default value for position
+  };
+
+  // If user exists, override the default values
+  if (user) {
+    currentUser.name = `${user.firstName} ${user.lastName}`;
+    currentUser.position = user.position; // Include this line
+    if (user.photoUrl) {
+      currentUser.photo = user.photoUrl;
+    }
+  }
+  //   else {
+  //     //change url to /
+  //     window.location.href='/login';
+  //   }
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   return (
-    <form onSubmit={handleSubmit}>
+    <div>
+        <TopBar toggleSidebar={toggleSidebar} />
+        <Sidebar
+          currentUser={currentUser}
+          toggleSidebar={toggleSidebar}
+          className={isSidebarOpen ? "open" : ""}
+        />
       <h1>Generate Offer Letter</h1>
+      <form onSubmit={handleSubmit}>
       <div>
         <label>Dear:</label>
         <input
@@ -137,9 +197,10 @@ const GenerateOfferLetterForm: React.FC = () => {
         />
       </div>
       <div>
-        <button type="submit">Generate Offer Letter</button>
+        <button className="form" type="submit">Generate Offer Letter</button>
       </div>
     </form>
+    </div>
   );
 };
 

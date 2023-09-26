@@ -36,7 +36,7 @@
     color: white;
     outline: none;
     width: auto; /* Ensure it doesn't have a fixed width */
-    max-width: 80%; /* Limit its maximum width */
+    max-width: 60%; /* Limit its maximum width */
     flex-shrink: 0; /* Allow it to shrink if necessary */
   }
 
