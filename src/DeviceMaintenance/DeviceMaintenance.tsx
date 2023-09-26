@@ -1,10 +1,16 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../Redux/store";
 import "./DeviceMaintenance.css";
-import { useSelector } from "react-redux";
 import employeesData from "../EmployeeManagement/EmployeesData";
 import Sidebar from "../SideBar/Sidebar";
 import TopBar from "../TopBar/Topbar";
-import { RootState } from "../Redux/store";
+import {
+  setStatusReceived,
+  setStatusReplaced,
+  setStatusRejected,
+  setStatusSentBack,
+} from "../Redux/DeviceMaintenanceSlice";
 
 type Employee = {
   id: number;
@@ -18,123 +24,117 @@ type Employee = {
   photoUrl?: string;
 };
 
-type DeviceMaintenanceData = {
-  branchName: string;
-  customerName: string;
-  phoneNumber: string;
-  device: string;
-  price: string;
-  serialNumber: string;
-  repairType: string;
-  dateReceived: string;
-  description: string;
-};
-
-const DeviceMaintenance: React.FC = () => {
-  // Mock data
-  const mockRequests: DeviceMaintenanceData[] = [
-    {
-      branchName: "Branch A",
-      customerName: "John Doe",
-      phoneNumber: "1234567890",
-      device: "iPhone 12",
-      price: "700",
-      serialNumber: "XYZ1234567",
-      repairType: "Software Update",
-      dateReceived: "2023-09-01",
-      description: "Software malfunctioning after the last update.",
-    },
-    {
-      branchName: "Branch B",
-      customerName: "Jane Smith",
-      phoneNumber: "9876543210",
-      device: "Samsung S21",
-      price: "800",
-      serialNumber: "ABC9876543",
-      repairType: "Screen Replacement",
-      dateReceived: "2023-09-05",
-      description: "Screen cracked after dropping.",
-    },
-  ];
-
-  const [requests] = useState<DeviceMaintenanceData[]>(mockRequests);
-
+function DeviceMaintenance() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  // Fetch the logged-in user's username from Redux store
   const loggedInUser = useSelector((state: RootState) => state.auth.user);
   const loggedInUsername = loggedInUser ? loggedInUser.username : null;
 
-  // Find the user in employeesData using the fetched username
   const user: Employee | undefined = loggedInUsername
     ? employeesData.employees.find((emp) => emp.username === loggedInUsername)
     : undefined;
 
-  // Default values
   let currentUser = {
     name: "Unknown",
     photo: "/path/to/default/photo.jpg",
-    position: "Guest", // Default value for position
+    position: "Guest",
   };
 
-  // If user exists, override the default values
   if (user) {
     currentUser.name = `${user.firstName} ${user.lastName}`;
-    currentUser.position = user.position; // Include this line
+    currentUser.position = user.position;
     if (user.photoUrl) {
       currentUser.photo = user.photoUrl;
     }
   }
-  //   else {
-  //     //change url to /
-  //     window.location.href='/login';
-  //   }
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
+  const maintenanceItems = useSelector((state: RootState) => state.DeviceMaintenance);
+  const dispatch = useDispatch();
+
+  const handleReceived = (serialNumber: string) => {
+    dispatch(setStatusReceived(serialNumber));
+  };
+
+  const handleReplaced = (serialNumber: string) => {
+    dispatch(setStatusReplaced(serialNumber));
+  };
+
+  const handleRejected = (serialNumber: string, e: React.MouseEvent<HTMLButtonElement>) => {
+    const reasonInput = e.currentTarget.previousElementSibling as HTMLInputElement;
+    if (reasonInput && reasonInput.value) {
+      dispatch(setStatusRejected({ serialNumber, reason: reasonInput.value }));
+    }
+  };
+
+  const handleSendBack = (serialNumber: string) => {
+    dispatch(setStatusSentBack(serialNumber));
+  };
+
   return (
-    <div className="Device-Maintenance-container">
+    <div className="device-maintenance-container">
       <TopBar toggleSidebar={toggleSidebar} />
       <Sidebar
         currentUser={currentUser}
         toggleSidebar={toggleSidebar}
         className={isSidebarOpen ? "open" : ""}
       />
-      <h2>Device Maintenance</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Branch Name</th>
-            <th>Customer Name</th>
-            <th>Phone Number</th>
-            <th>Device</th>
-            <th>Price</th>
-            <th>Serial Number</th>
-            <th>Repair Type</th>
-            <th>Date Received</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          {requests.map((request, index) => (
-            <tr key={index}>
-              <td>{request.branchName}</td>
-              <td>{request.customerName}</td>
-              <td>{request.phoneNumber}</td>
-              <td>{request.device}</td>
-              <td>{request.price}</td>
-              <td>{request.serialNumber}</td>
-              <td>{request.repairType}</td>
-              <td>{request.dateReceived}</td>
-              <td>{request.description}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+
+      <h1>Device Maintenance</h1>
+      {maintenanceItems.map((item: any, index: number) => ( // Add explicit types
+        <div key={index} className="maintenance-item">
+ <p>
+          <strong>Branch Name:</strong> {item.branchName}
+        </p>
+        <p>
+          <strong>Customer Name:</strong> {item.customerName}
+        </p>
+        <p>
+          <strong>Phone Number:</strong> {item.phoneNumber}
+        </p>
+        <p>
+          <strong>Device:</strong> {item.device}
+        </p>
+        <p>
+          <strong>Price:</strong> {item.price}
+        </p>
+        <p>
+          <strong>Serial Number:</strong> {item.serialNumber}
+        </p>
+        <p>
+          <strong>Repair Type:</strong> {item.repairType}
+        </p>
+        <p>
+          <strong>Date Received:</strong> {item.dateReceived}
+        </p>
+        <p>
+          <strong>Description:</strong> {item.description}
+        </p>          
+          {item.status === "Pending" && (
+            <button onClick={() => handleReceived(item.serialNumber)}>Received</button>
+          )}
+          {item.status === "Received" && (
+            <>
+              <button onClick={() => handleReplaced(item.serialNumber)}>Replaced</button>
+              <input type="text" placeholder="Rejection reason" />
+              <button onClick={(e) => handleRejected(item.serialNumber, e)}>Reject</button>
+            </>
+          )}
+          {item.status === "Replaced" && (
+            <button onClick={() => handleSendBack(item.serialNumber)}>Send Back</button>
+          )}
+          {item.status === "Sent Back" && (
+            <span style={{ color: "green", fontSize: "24px" }}>✔️</span>
+          )}
+          
+          <hr />
+        </div>
+      ))}
     </div>
   );
-};
+}
 
 export default DeviceMaintenance;

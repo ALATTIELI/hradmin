@@ -3,12 +3,14 @@ import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './authSlice';
 import orderReducer from './orderSlice';
 import warrantySlice from './warrantySlice';
+import DeviceMaintenanceSlice from './DeviceMaintenanceSlice';
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
     orders: orderReducer,
     warranty: warrantySlice,
+    DeviceMaintenance: DeviceMaintenanceSlice,
   },
 });
 
