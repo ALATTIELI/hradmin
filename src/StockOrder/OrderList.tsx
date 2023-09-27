@@ -21,7 +21,7 @@ type Employee = {
 
 
 function OrderList() {
-    const [isSidebarOpen, setIsSidebarOpen] = React.useState(true);
+    const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
 
     // Fetch the logged-in user's username from Redux store
     const loggedInUser = useSelector((state: RootState) => state.auth.user);
@@ -65,7 +65,7 @@ function OrderList() {
             <h2>List of Orders</h2>
             <ul>
                 {orders.map(order => (
-                    <Link to={`/order-details/${order.id}`} key={order.id}>
+                    <Link to={`/Order-Details/${order.id}`} key={order.id}>
                         <li>
                             {order.branchName} - {order.date}
                         </li>

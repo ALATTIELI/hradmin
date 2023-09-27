@@ -4,6 +4,7 @@ import authReducer from './authSlice';
 import orderReducer from './orderSlice';
 import warrantySlice from './warrantySlice';
 import DeviceMaintenanceSlice from './DeviceMaintenanceSlice';
+import Request from './requestsSlice';
 
 const store = configureStore({
   reducer: {
@@ -11,6 +12,8 @@ const store = configureStore({
     orders: orderReducer,
     warranty: warrantySlice,
     DeviceMaintenance: DeviceMaintenanceSlice,
+    Requests: Request,
+
   },
 });
 

@@ -9,7 +9,7 @@ export const commonButtons = [ "Dashboard", "Settings"];
 export const positionButtons: ButtonConfiguration[] = [
     {
       position: "Software Engineer",
-      buttons: ["Stock Order", "Warranty Items", "Borrow Items", "Device Maintenance", "Offer Letter"]
+      buttons: ["Stock Order", "Warranty Items", "Borrow Items", "Device Maintenance", "Offer Letter", "Requests"]
     },
     {
       position: "Product Manager",

@@ -1,0 +1,64 @@
+/* Base styles */
+.request-details-container {
+  max-width: 800px; /* Adapt as needed */
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: gives a subtle shadow around the content */
+  background-color: #ffffff; /* White background to ensure readability */
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333; /* Dark color for better visibility */
+}
+
+p {
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+  color: #555; /* Slightly lighter than the heading */
+}
+
+.button-container {
+  display: flex;
+  gap: 10px; /* Gap between buttons */
+}
+
+.button-container button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  background-color: #007bff; /* Primary color */
+  color: #ffffff; /* White text */
+  border-radius: 5px; /* Rounded corners */
+}
+
+.button-container button:hover {
+  background-color: #0056b3; /* Darker shade for hover */
+}
+
+/* Mobile first approach: Styles for smaller screens */
+@media only screen and (max-width: 600px) {
+  .request-details-container {
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  p {
+    font-size: 1rem;
+  }
+
+  .button-container button {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Styles for larger screens */
+@media only screen and (min-width: 601px) {
+  /* You can add any styles specific to larger screens here */
+}
