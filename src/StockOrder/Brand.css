@@ -1,73 +1,143 @@
 /* Base styles for all devices */
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-  }
-  
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+}
+
+.header h1 {
+  font-size: 2rem;
+}
+
+.main-content > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* center children horizontally */
+  gap: 10px; /* provide space between input and button */
+}
+
+
+.footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+}
+
+/* Styling for category list items */
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  padding: 5px; /* Inner spacing */
+  padding-left: 5px;
+  margin: 10px ; 
+  border: 1px solid #ccc; /* Border around the category */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.clickable-icon {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  padding: 5px; /* some padding to make it easier to click */
+  margin: 0 5px; /* some margin to separate them a bit */
+}
+.icon-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+/* Coloring the icons */
+.clickable-icon .MuiSvgIcon-root {
+  transition: 0.3s;
+}
+
+.clickable-icon:hover .MuiSvgIcon-root {
+  opacity: 0.8;
+}
+
+/* Edit Icon */
+.edit-icon > .MuiSvgIcon-root {
+  color: #007BFF; /* Blue */
+}
+
+.edit-icon:hover > .MuiSvgIcon-root {
+  color: #0056b3; /* Darker blue on hover */
+}
+
+/* Delete Icon */
+.delete-icon > .MuiSvgIcon-root {
+  color: red; /* Red */
+}
+
+.delete-icon:hover > .MuiSvgIcon-root {
+  color: #b32d2d; /* Darker red on hover */
+}
+
+.back-icon {
+  cursor: pointer; 
+  padding: 10px; 
+  display: inline-flex; 
+  align-items: center; 
+  position: absolute;  /* Absolute positioning */
+  top: 10px;           /* 10px from the top */
+  left: 10px;          /* 10px from the left */
+  z-index: 10;         /* Ensure it's above other elements if needed */
+}
+
+/* Responsive styles for different screen sizes */
+@media (max-width: 768px) {
+  /* Styles for screens smaller than 768px */
   .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+      padding: 10px;
   }
-  
-  .header {
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    padding: 20px;
-  }
-  
   .header h1 {
-    font-size: 2rem;
-  }
-  
-  .main-content {
-    padding: 20px;
-  }
-  
-  .footer {
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    padding: 10px;
-  }
-  
-  /* Responsive styles for different screen sizes */
-  @media (max-width: 768px) {
-    /* Styles for screens smaller than 768px */
-    .container {
-      padding: 10px;
-    }
-    .header h1 {
       font-size: 1.5rem;
-    }
   }
-  
-  /* Additional media queries for larger screens if needed */
-  @media (min-width: 1200px) {
-    /* Styles for screens larger than 1200px */
-    .container {
+}
+
+/* Additional media queries for larger screens if needed */
+@media (min-width: 1200px) {
+  /* Styles for screens larger than 1200px */
+  .container {
       padding: 40px;
-    }
-    .header h1 {
+  }
+  .header h1 {
       font-size: 2.5rem;
-    }
   }
-  
-  /* Styles for smaller devices (e.g., mobile phones) */
-  @media (max-width: 576px) {
-    .header {
+}
+
+/* Styles for smaller devices (e.g., mobile phones) */
+@media (max-width: 576px) {
+  .header {
       padding: 10px;
-    }
-    .header h1 {
+  }
+  .header h1 {
       font-size: 1.2rem;
-    }
-    .main-content {
-      padding: 10px;
-    }
-    .footer {
-      padding: 5px;
-    }
   }
-  
+  .main-content {
+      padding: 10px;
+  }
+  .footer {
+      padding: 5px;
+  }
+}
