@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./AddProduct.css";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-
+import AddedProduct from './AddedProduct';
 
 function AddProduct() {
   const [productName, setProductName] = useState("");
@@ -15,7 +15,7 @@ function AddProduct() {
   const [availableQuantity, setAvailableQuantity] = useState(0);
   const [category, setCategory] = useState("");
   const [brand, setBrand] = useState("");
-  const [productAdded, setProductAdded] = useState(false); // New state to track product addition
+  const [productAdded, setProductAdded] = useState(false);
 
   const handleAddStock = () => {
     const newStock = {
@@ -31,27 +31,31 @@ function AddProduct() {
       brand,
     };
     console.log(newStock);
-
-    // TODO: Add logic to save the new stock (e.g., send to server, update local state, etc.)
-
-    // Redirect to another page after adding, e.g., stock order list
-    setProductAdded(true); // Mark the product as added
+    setProductAdded(true);
   };
 
   return (
     <div className="add-product">
       <Link to="/Stock-order" className="back-icon">
-      <ArrowBackIcon />
-    </Link>
+        <ArrowBackIcon />
+      </Link>
       <h2>Add New Product</h2>
+
       {productAdded ? (
-        <div>
-          <p>Product added successfully!</p>
-          <Link to="/Add-Product">Go back to Products</Link>
-        </div>
+        <AddedProduct 
+          productName={productName}
+          description={description}
+          costPrice={costPrice}
+          barcodePrice={barcodePrice}
+          photoUrl={photoUrl}
+          sku={sku}
+          barcode={barcode}
+          availableQuantity={availableQuantity}
+          category={category}
+          brand={brand}
+        />
       ) : (
-        <form
-          onSubmit={(e) => {
+        <form onSubmit={(e) => {
             e.preventDefault();
             handleAddStock();
           }}

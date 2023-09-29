@@ -1,0 +1,16 @@
+.added-product {
+    font-family: Arial, sans-serif;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+}
+
+.added-product h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.added-product div {
+    margin: 10px 0;
+}
