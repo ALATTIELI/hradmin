@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./AddProduct.css";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+
 
 function AddProduct() {
   const [productName, setProductName] = useState("");
@@ -38,11 +40,14 @@ function AddProduct() {
 
   return (
     <div className="add-product">
+      <Link to="/Stock-order" className="back-icon">
+      <ArrowBackIcon />
+    </Link>
       <h2>Add New Product</h2>
       {productAdded ? (
         <div>
           <p>Product added successfully!</p>
-          <Link to="/">Go back to Products</Link>
+          <Link to="/Add-Product">Go back to Products</Link>
         </div>
       ) : (
         <form
@@ -107,7 +112,6 @@ function AddProduct() {
           <button type="submit">Add Product</button>
         </form>
       )}
-      <Link to="/">Back to Products</Link>
     </div>
   );
 }
