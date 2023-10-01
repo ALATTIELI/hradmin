@@ -38,6 +38,20 @@ p {
   background-color: #0056b3; /* Darker shade for hover */
 }
 
+.back-icon {
+    color: white;
+    cursor: pointer; 
+    padding: 10px; 
+    display: inline-flex; 
+    align-items: center; 
+    position: fixed;  /* This will fix the position */
+    top: 10px;       /* 10px from the top */
+    left: 10px;      /* 10px from the left */
+    z-index: 1000;   /* Ensure it's above other elements */
+    background-color: #007BFF; /* Optional: To ensure the icon is visible on all backgrounds */
+    border-radius: 50%; /* Optional: To make it circular */
+  }
+
 /* Mobile first approach: Styles for smaller screens */
 @media only screen and (max-width: 600px) {
   .request-details-container {

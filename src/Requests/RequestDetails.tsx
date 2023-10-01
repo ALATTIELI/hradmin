@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../Redux/store";
 import { approveRequest, rejectRequest } from "../Redux/requestsSlice";
@@ -6,8 +6,8 @@ import mockRequests from "./mockRequests";
 import "./RequestDetails.css";
 import { useState } from "react";
 import employeesData from "../EmployeeManagement/EmployeesData";
-import Sidebar from "../SideBar/Sidebar";
-import TopBar from "../TopBar/Topbar";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+
 
 type Employee = {
   id: number;
@@ -43,7 +43,7 @@ function RequestDetails() {
     dispatch(rejectRequest(request.id));
   };
 
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [] = useState(false);
 
   // Fetch the logged-in user's username from Redux store
   const loggedInUser = useSelector((state: RootState) => state.auth.user);
@@ -74,19 +74,13 @@ function RequestDetails() {
   //     window.location.href='/login';
   //   }
 
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
 
   return (
     <div className="request-details-container">
-      <TopBar toggleSidebar={toggleSidebar} />
-      <Sidebar
-        currentUser={currentUser}
-        toggleSidebar={toggleSidebar}
-        className={isSidebarOpen ? "open" : ""}
-      />
       {/* Add this class */}
+      <Link to="/requests" className="back-icon">
+      <ArrowBackIcon />
+    </Link>
       <h1>Request Details</h1>
       <p>Branch: {request.branch}</p>
       <p>Name: {request.name}</p>
