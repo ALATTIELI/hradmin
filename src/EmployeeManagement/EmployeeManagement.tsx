@@ -197,6 +197,8 @@ function EmployeeManagement() {
       <h2>Employee Management</h2>
       <button onClick={() => setShowForm(true)}>Add New Employee</button>
 
+      <button onClick={() => setShowForm(true)}> Employment Information</button>
+
       {showForm && (
         <div className="new-employee-form">
           <form onSubmit={handleSubmit}>
@@ -549,6 +551,7 @@ function EmployeeManagement() {
           </form>
         </div>
       )}
+
     </div>
   );
 }
