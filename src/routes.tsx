@@ -20,6 +20,7 @@ import Brand from './StockOrder/Brand';
 import GenerateOfferLetterForm from './OfferLetterGenerator/GenerateOfferLetterForm';
 import Requests from './Requests/Requests';
 import RequestDetails from './Requests/RequestDetails';
+import CompanyDetails from './CompanyDetails/CompanyDetails';
 
 
 
@@ -49,6 +50,7 @@ const AppRoutes: React.FC = () => {
         <Route path="/offer-letter" element={<GenerateOfferLetterForm />} />
         <Route path="/Requests" element={<Requests />} />
         <Route path="/request-details/:requestId" element={<RequestDetails />} />
+        <Route path="/company-details" element={<CompanyDetails />} />
 
 
 
