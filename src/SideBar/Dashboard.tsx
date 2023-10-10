@@ -70,9 +70,8 @@ function Dashboard() {
           <div className="box employees">
             <Link to="/employee-management">Manage Employees</Link>
           </div>
-          <div className="box tasks">
-            <h2>Tasks/Projects</h2>
-            {/* Tasks or projects content here */}
+          <div className="box companydetails">
+            <Link to="/company-details">Company Details</Link>
           </div>
           <div className="box notifications">
             <h2>Notifications/Updates</h2>

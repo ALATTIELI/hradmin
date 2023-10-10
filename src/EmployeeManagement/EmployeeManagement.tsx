@@ -5,7 +5,7 @@ import Sidebar from "../SideBar/Sidebar";
 import TopBar from "../TopBar/Topbar";
 import { RootState } from "../Redux/store";
 import { getNames } from "country-list";
-import "./EmployeeManagement.css"
+import "./EmployeeManagement.css";
 
 type EmployeeData = {
   id: number;
@@ -20,7 +20,7 @@ type EmployeeData = {
 };
 
 type NewEmployeeForm = {
-  employeeId: string;
+  employeeNo: string;
   name: string;
   position: string;
   photo: File | null;
@@ -33,9 +33,9 @@ type NewEmployeeForm = {
   joiningdate: string;
   salary: string;
   visaCompany: string;
-  giveName: string;
   passportNo: string;
   startDateOfJoining: string;
+  passportissue: string;
   passportExpiry: string;
   employmentContractFullWorkIssueDate: string;
   employmentContractFullWorkExpiryDate: string;
@@ -47,12 +47,17 @@ type NewEmployeeForm = {
   workPhoneNo: string;
   personalNo: string;
   labourCard: string;
+  labourCardIssue: string;
   labourCardExpiry: string;
   eidNumber: string;
+  eidDateIssue: string;
   eidDateExpiry: string;
   insuranceName: string;
+  insuranceIssue: string;
   insuranceExpiry: string;
   iloeDubaiInsurance: string;
+  workinsuranceIssue: string;
+  workinsuranceExpiry: string;
   covidVaccination: string[]; // array to store multiple doses
 };
 
@@ -61,7 +66,7 @@ const countries = getNames();
 function EmployeeManagement() {
   const [showForm, setShowForm] = useState(false);
   const [employeeData, setEmployeeData] = useState<NewEmployeeForm>({
-    employeeId: "",
+    employeeNo: "",
     name: "",
     position: "",
     photo: null,
@@ -74,9 +79,9 @@ function EmployeeManagement() {
     joiningdate: "",
     salary: "",
     visaCompany: "",
-    giveName: "",
     passportNo: "",
     startDateOfJoining: "",
+    passportissue: "",
     passportExpiry: "",
     employmentContractFullWorkIssueDate: "",
     employmentContractFullWorkExpiryDate: "",
@@ -88,12 +93,17 @@ function EmployeeManagement() {
     workPhoneNo: "",
     personalNo: "",
     labourCard: "",
+    labourCardIssue: "",
     labourCardExpiry: "",
     eidNumber: "",
+    eidDateIssue: "",
     eidDateExpiry: "",
     insuranceName: "",
+    insuranceIssue: "",
     insuranceExpiry: "",
     iloeDubaiInsurance: "",
+    workinsuranceIssue: "",
+    workinsuranceExpiry: "",
     covidVaccination: [],
   });
 
@@ -101,9 +111,29 @@ function EmployeeManagement() {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
+    let updatedData: Partial<NewEmployeeForm> = {
+      [name]: value,
+    };
+
+    // If dateOfBirth is changed, compute the age
+    if (name === "dateOfBirth") {
+      const birthDate = new Date(value);
+      const today = new Date();
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const monthDifference = today.getMonth() - birthDate.getMonth();
+
+      if (
+        monthDifference < 0 ||
+        (monthDifference === 0 && today.getDate() < birthDate.getDate())
+      ) {
+        age--;
+      }
+      updatedData.age = age.toString();
+    }
+
     setEmployeeData((prevData) => ({
       ...prevData,
-      [name]: value,
+      ...updatedData,
     }));
   };
 
@@ -172,10 +202,17 @@ function EmployeeManagement() {
           <form onSubmit={handleSubmit}>
             <input
               type="text"
-              placeholder="Employee ID"
-              name="employeeId"
-              value={employeeData.employeeId}
+              placeholder="Employee No"
+              name="employeeNo"
+              value={employeeData.employeeNo}
               onChange={handleChange}
+            />
+            <label htmlFor="uploadphoto">Profile Pic:</label>
+            <input
+              type="file"
+              placeholder="Upload Photo"
+              name="photo"
+              onChange={handleFileChange}
             />
             <input
               type="text"
@@ -221,13 +258,6 @@ function EmployeeManagement() {
             />
             <input
               type="text"
-              placeholder="Give Name"
-              name="giveName"
-              value={employeeData.giveName}
-              onChange={handleChange}
-            />
-            <input
-              type="text"
               placeholder="Passport No"
               name="passportNo"
               value={employeeData.passportNo}
@@ -239,6 +269,16 @@ function EmployeeManagement() {
               id="startDateOfJoining"
               name="startDateOfJoining"
               value={employeeData.startDateOfJoining}
+              onChange={handleChange}
+              pattern="\d{2}/\d{2}/\d{4}"
+              placeholder="DD/MM/YYYY"
+            />
+            <label htmlFor="passportIssue">Passport Issue:</label>
+            <input
+              type="date"
+              id="passportIssue"
+              name="passportIssue"
+              value={employeeData.passportissue}
               onChange={handleChange}
               pattern="\d{2}/\d{2}/\d{4}"
               placeholder="DD/MM/YYYY"
@@ -319,7 +359,7 @@ function EmployeeManagement() {
               placeholder="Age"
               name="age"
               value={employeeData.age}
-              onChange={handleChange}
+              readOnly // Since age is automatically calculated, make it read-only
             />
             <label>Nationality:</label>
             <select
@@ -354,6 +394,16 @@ function EmployeeManagement() {
               value={employeeData.labourCard}
               onChange={handleChange}
             />
+            <label htmlFor="labourCardIssue">Labour Card Issue:</label>
+            <input
+              type="date"
+              id="labourCardIssue"
+              name="labourCardIssue"
+              value={employeeData.labourCardIssue}
+              onChange={handleChange}
+              pattern="\d{2}/\d{2}/\d{4}"
+              placeholder="DD/MM/YYYY"
+            />
             <label htmlFor="labourCardExpiry">Labour Card Expiry:</label>
             <input
               type="date"
@@ -370,6 +420,16 @@ function EmployeeManagement() {
               name="eidNumber"
               value={employeeData.eidNumber}
               onChange={handleChange}
+            />
+            <label htmlFor="eidDateIssue">EID Date Issue:</label>
+            <input
+              type="date"
+              id="eidDateIssue"
+              name="eidDateIssue"
+              value={employeeData.eidDateIssue}
+              onChange={handleChange}
+              pattern="\d{2}/\d{2}/\d{4}"
+              placeholder="DD/MM/YYYY"
             />
             <label htmlFor="eidDateExpiry">EID Date Expiry:</label>
             <input
@@ -388,6 +448,16 @@ function EmployeeManagement() {
               value={employeeData.insuranceName}
               onChange={handleChange}
             />
+            <label htmlFor="insuranceExpiry">Insurance Issue:</label>
+            <input
+              type="date"
+              id="insuranceIssue"
+              name="insuranceIssue"
+              value={employeeData.insuranceIssue}
+              onChange={handleChange}
+              pattern="\d{2}/\d{2}/\d{4}"
+              placeholder="DD/MM/YYYY"
+            />
             <label htmlFor="insuranceExpiry">Insurance Expiry:</label>
             <input
               type="date"
@@ -404,6 +474,26 @@ function EmployeeManagement() {
               name="iloeDubaiInsurance"
               value={employeeData.iloeDubaiInsurance}
               onChange={handleChange}
+            />
+            <label htmlFor="workinsuranceExpiry">Work Insurance Issue:</label>
+            <input
+              type="date"
+              id="workinsuranceIssue"
+              name="workinsuranceIssue"
+              value={employeeData.workinsuranceIssue}
+              onChange={handleChange}
+              pattern="\d{2}/\d{2}/\d{4}"
+              placeholder="DD/MM/YYYY"
+            />
+            <label htmlFor="workinsuranceExpiry">Work Insurance Expiry:</label>
+            <input
+              type="date"
+              id="workinsuranceExpiry"
+              name="workinsuranceExpiry"
+              value={employeeData.workinsuranceExpiry}
+              onChange={handleChange}
+              pattern="\d{2}/\d{2}/\d{4}"
+              placeholder="DD/MM/YYYY"
             />
             {/* For simplicity, I'm only adding 1st dose. You can replicate this for the 2nd, 3rd, and 4th doses. */}
             <label htmlFor="covidVaccination[0]">
@@ -455,12 +545,6 @@ function EmployeeManagement() {
               placeholder="DD/MM/YYYY"
             />
             {/* ...repeat for 2nd, 3rd, and 4th doses... */}
-            <input
-              type="file"
-              placeholder="Upload Photo"
-              name="photo"
-              onChange={handleFileChange}
-            />
             <button type="submit">Add Employee</button>
           </form>
         </div>
