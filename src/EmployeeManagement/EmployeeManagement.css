@@ -1,0 +1,93 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+}
+
+.employee-management {
+    margin-left: 270px; /* space for the sidebar + padding */
+    padding: 1rem;
+    box-sizing: border-box;
+    transition: margin-left 0.3s ease-in-out;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+button {
+    display: block;
+    margin: 20px auto;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.new-employee-form {
+    background-color: #fff;
+    padding: 2rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.new-employee-form form {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1rem;
+}
+
+@media screen and (min-width: 768px) {
+    .new-employee-form form {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .new-employee-form form {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+input, select, button {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+input:focus, select:focus {
+    border-color: #007BFF;
+}
+
+input[type="file"] {
+    padding: 5px;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+button[type="submit"] {
+    width: auto;
+    margin-top: 1rem;
+}
+
+/* Media Queries for adjusting the main content when sidebar is open on small screens */
+@media only screen and (max-width: 600px) {
+    .employee-management {
+        margin-left: 0;
+    }
+}
