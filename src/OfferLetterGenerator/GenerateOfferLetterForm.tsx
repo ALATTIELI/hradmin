@@ -48,25 +48,30 @@ const GenerateOfferLetterForm: React.FC = () => {
   const generatePDF = () => {
     const doc = new jsPDF();
     const maxWidth = 180;
+    const pageHeight = 297; // A4 height
+    const margin = 10; // Bottom margin
 
+    let yPosition = 40;
+    const addContent = (content: string, increment = 10) => {
+      const splitText = doc.splitTextToSize(content, maxWidth);
+      if (yPosition + increment * splitText.length > pageHeight - margin) {
+        doc.addPage();
+        yPosition = 10; // Reset yPosition for new page
+      }
+      doc.text(splitText, 10, yPosition);
+      yPosition += increment * splitText.length;
+    };
     // Serial Number and Date
-    doc.text(`Serial Number: #${serialNumber}`, 10, 10);
-    doc.text(`Date: ${currentDate}`, 150, 10);
-
+    addContent(`Serial Number: #${serialNumber}`);
+    addContent(`Date: ${currentDate}`);
     doc.setFontSize(22);
-    doc.text("JOB OFFER", 10, 30);
+    addContent("JOB OFFER", 12);
     doc.setFontSize(12);
-
-    doc.text(`Dear: ${candidateName}`, 10, 40);
-  let splitText = doc.splitTextToSize(
-    `${branchName} is delighted to offer you the ${positionType} position of Sales Person with an anticipated start date of ${anticipatedStartDate}.`,
-    maxWidth
-  );
-  doc.text(splitText, 10, 50);
-  let yPosition = 50 + 10 * splitText.length;
-
-  doc.text(`As the Sales Person, you will be responsible for:`, 10, yPosition);
-  yPosition += 10;
+    addContent(`Dear: ${candidateName}`);
+    addContent(
+      `${branchName} is delighted to offer you the ${positionType} position of Sales Person with an anticipated start date of ${anticipatedStartDate}.`
+    );
+    addContent(`As the Sales Person, you will be responsible for:`);
 
     const responsibilities = [
       "Greet customers.",
@@ -88,87 +93,72 @@ const GenerateOfferLetterForm: React.FC = () => {
     ];
 
     responsibilities.forEach((responsibility) => {
-      splitText = doc.splitTextToSize(responsibility, maxWidth);
-      doc.text(splitText, 10, yPosition);
-      yPosition += 10 * splitText.length;
+      addContent(responsibility);
     });
 
-    doc.text(
-      `You will report directly to Branch Manager/Supervisor at ${branchName}.`,
-      10,
-      yPosition
+    addContent(
+      `You will report directly to Branch Manager/Supervisor at ${branchName}.`
     );
-    yPosition += 10;
-
-    splitText = doc.splitTextToSize(
-      `The starting salary for this position is ${startingSalary} after 1 month or 6 months and depending on your performance will be increased from ${increaseMinSalary} to ${increaseMaxSalary}. Payment is on a Monthly basis.`,
-      maxWidth
+    addContent(
+      `The starting salary for this position is ${startingSalary} after 1 month or 6 months and depending on your performance will be increased from ${increaseMinSalary} to ${increaseMaxSalary}. Payment is on a Monthly basis.`
     );
-    doc.text(splitText, 10, yPosition);
-    yPosition += 10 * splitText.length;
-  
-
-    doc.setTextColor(255, 0, 0); // Set text color to red
-    doc.text(
+    addContent(
       `Rule in company, the contract will be 3 years, if you do not finish the 2 years you need to pay 5000aed.`,
-      10,
-      yPosition
+      7
     );
-    doc.setTextColor(0, 0, 0); // Reset text color to black
-    yPosition += 10;
-
-    splitText = doc.splitTextToSize(
-      `${branchName} offers a comprehensive benefits program, which includes medical insurance, etc.`,
-      maxWidth
+    addContent(
+      `${branchName} offers a comprehensive benefits program, which includes medical insurance, etc.`
     );
-    doc.text(splitText, 10, yPosition);
-    yPosition += 10 * splitText.length;
-  
-    doc.text(`Home Leave & Allowance`, 10, yPosition);
-    yPosition += 7;
-    doc.text(
-      `Employee shall be entitled to 30 days home leave. Employee will receive 1000aed for leave allowance.`,
-      10,
-      yPosition
+    addContent(`Home Leave & Allowance`, 7);
+    addContent(
+      `Employee shall be entitled to 30 days home leave. Employee will receive 1000aed for leave allowance.`
     );
-    yPosition += 10;
-
-    doc.text(`Salary details are as follows:`, 10, yPosition);
-    yPosition += 7;
-    doc.text(`Basic Salary of ${basicSalaryDetails}`, 10, yPosition);
-    yPosition += 7;
-    doc.text(`Nature Of Work Allowance ${workAllowance}`, 10, yPosition);
-    yPosition += 7;
-    doc.text(`Cost Of Living Allowance ${livingAllowance}`, 10, yPosition);
-    yPosition += 10;
-
-    splitText = doc.splitTextToSize(
-      `Note: This offer is for one week from the date of knowing that if you agree to work will go about work after approval 1 week.`,
-      maxWidth
+    addContent(`Salary details are as follows:`, 7);
+    addContent(`Basic Salary of ${basicSalaryDetails}`, 7);
+    addContent(`Nature Of Work Allowance ${workAllowance}`, 7);
+    addContent(`Cost Of Living Allowance ${livingAllowance}`, 7);
+    addContent(
+      `Note: This offer is for one week from the date of knowing that if you agree to work will go about work after approval 1 week.`
     );
-    doc.text(splitText, 10, yPosition);
-    yPosition += 10 * splitText.length;
-  
-    doc.text(`Mr. Abdulmunim Swedan`, 10, yPosition);
-    yPosition += 7;
-    doc.text(`Chief Financial Officer    Signature / Date:`, 10, yPosition);
-    yPosition += 10;
+    addContent(`Mr. Abdulmunim Swedan`, 7);
+    addContent(`Chief Financial Officer    Signature / Date:`, 7);
+    addContent(`Awad Jamal Al Awad`, 7);
+    addContent(`Operation Manager    Signature / Date:`, 7);
+    addContent(`Laraine Kris Alcantara`, 7);
+    addContent(`Hr&Administrative    Signature / Date:`, 7);
+    addContent(`Mahmoud Ali Abdelahd Ali  Employee    Signature / Date:`, 7);
 
-    doc.text(`Awad Jamal Al Awad`, 10, yPosition);
-    yPosition += 7;
-    doc.text(`Operation Manager    Signature / Date:`, 10, yPosition);
-    yPosition += 10;
-
-    doc.text(`Laraine Kris Alcantara`, 10, yPosition);
-    yPosition += 7;
-    doc.text(`Hr&Administrative    Signature / Date:`, 10, yPosition);
-    yPosition += 10;
-
-    doc.text(
-      `Mahmoud Ali Abdelahd Ali  Employee    Signature / Date:`,
-      10,
-      yPosition
+    addContent(
+      `You will report directly to Branch Manager/Supervisor at ${branchName}.`
     );
+    addContent(
+      `The starting salary for this position is ${startingSalary} after 1 month or 6 months and depending on your performance will be increased from ${increaseMinSalary} to ${increaseMaxSalary}. Payment is on a Monthly basis.`
+    );
+    addContent(
+      `Rule in company, the contract will be 3 years, if you do not finish the 2 years you need to pay 5000aed.`,
+      7
+    );
+    addContent(
+      `${branchName} offers a comprehensive benefits program, which includes medical insurance, etc.`
+    );
+    addContent(`Home Leave & Allowance`, 7);
+    addContent(
+      `Employee shall be entitled to 30 days home leave. Employee will receive 1000aed for leave allowance.`
+    );
+    addContent(`Salary details are as follows:`, 7);
+    addContent(`Basic Salary of ${basicSalaryDetails}`, 7);
+    addContent(`Nature Of Work Allowance ${workAllowance}`, 7);
+    addContent(`Cost Of Living Allowance ${livingAllowance}`, 7);
+    addContent(
+      `Note: This offer is for one week from the date of knowing that if you agree to work will go about work after approval 1 week.`
+    );
+  addContent(`Mr. Abdulmunim Swedan`, 7);
+  addContent(`Chief Financial Officer    Signature / Date:`, 7);
+  addContent(`Awad Jamal Al Awad`, 7);
+  addContent(`Operation Manager    Signature / Date:`, 7);
+  addContent(`Laraine Kris Alcantara`, 7);
+  addContent(`Hr&Administrative    Signature / Date:`, 7);
+  addContent(`Mahmoud Ali Abdelahd Ali  Employee    Signature / Date:`, 7);
 
     doc.save("OfferLetter.pdf");
 
