@@ -49,29 +49,103 @@ const GenerateOfferLetterForm: React.FC = () => {
     const doc = new jsPDF();
     const maxWidth = 180;
     const pageHeight = 297; // A4 height
-    const margin = 10; // Bottom margin
+    const headerHeight = 30; // Adjust as necessary
+    const footerHeight = 30; // Adjust as necessary
+    const contentTopMargin = 50; // space between header and content start
+    const contentBottomMargin = 35; // space between content end and footer
 
-    let yPosition = 40;
-    const addContent = (content: string, increment = 10) => {
-      const splitText = doc.splitTextToSize(content, maxWidth);
-      if (yPosition + increment * splitText.length > pageHeight - margin) {
-        doc.addPage();
-        yPosition = 10; // Reset yPosition for new page
-      }
-      doc.text(splitText, 10, yPosition);
-      yPosition += increment * splitText.length;
+    let yPosition = contentTopMargin;
+
+    const addHeaderFooter = () => {
+      // Add header
+      doc.addImage("/header.png", "PNG", 10, 10, 190, headerHeight);
+
+      // Add footer
+      doc.addImage(
+        "/footer.png",
+        "PNG",
+        10,
+        pageHeight - footerHeight - 10,
+        190,
+        footerHeight
+      );
     };
+    const addContent = (
+      content: string,
+      increment = 10,
+      fontSize = 12,
+      fontStyle: "normal" | "bold" = "normal",
+      xPosition = 10,
+      color = [0, 0, 0], // Default to black. This is RGB.
+      alignment: "left" | "center" | "right" = "left"
+
+    ) => {
+      doc.setFontSize(fontSize);
+      doc.setFont("helvetica", fontStyle);
+      doc.setTextColor(color[0], color[1], color[2]);
+
+      if (alignment === "center") {
+        const textWidth = doc.getStringUnitWidth(content) * fontSize / doc.internal.scaleFactor;
+        const pageWidth = doc.internal.pageSize.width;
+        xPosition = (pageWidth - textWidth) / 2;
+    }
+
+      if (content === "JOB OFFER") {
+        const textWidth = doc.getStringUnitWidth(content) * fontSize;
+        xPosition = (280 - textWidth) / 2; // 210 is the width of an A4 paper in mm
+      }
+
+      const splitText = doc.splitTextToSize(content, maxWidth);
+      if (
+          yPosition + increment * splitText.length >
+          pageHeight - contentBottomMargin
+      ) {
+          doc.addPage();
+          yPosition = contentTopMargin;
+          addHeaderFooter();
+      }
+      doc.text(splitText, xPosition, yPosition);
+      yPosition += increment * splitText.length;
+      doc.setTextColor(0, 0, 0); // Reset text color to black after setting it
+  };
+
+    addHeaderFooter();
+
     // Serial Number and Date
-    addContent(`Serial Number: #${serialNumber}`);
-    addContent(`Date: ${currentDate}`);
-    doc.setFontSize(22);
-    addContent("JOB OFFER", 12);
     doc.setFontSize(12);
-    addContent(`Dear: ${candidateName}`);
+    doc.text(`Serial Number: #${serialNumber}`, 10, yPosition); // This will print the Serial Number on the left
+    doc.text(`Date: ${currentDate}`, 140, yPosition); // This will print the Date towards the right
+    yPosition += 10; // Increment yPosition for the next line of content
+    doc.setFontSize(22);
+    addContent("JOB OFFER", 12, 22, "bold"); // This will center the text because of the condition inside addContent    doc.setFontSize(12);
+    addContent(`Dear: ${candidateName}`, 10, 14, "bold");
     addContent(
       `${branchName} is delighted to offer you the ${positionType} position of Sales Person with an anticipated start date of ${anticipatedStartDate}.`
     );
     addContent(`As the Sales Person, you will be responsible for:`);
+
+    const responsibilitiesHeading = "Responsibilities:-";
+    const headingWidth = doc.getStringUnitWidth(responsibilitiesHeading) * 16; // Assuming 16 as font size for heading
+    const headingPosition = (270 - headingWidth) / 2; // 210 is the width of an A4 paper in mm
+    doc.setFontSize(16);
+    doc.setFont("helvetica", "bold");
+    doc.text(responsibilitiesHeading, headingPosition, yPosition);
+    yPosition += 10; // Adjust yPosition for spacing after the heading
+
+    const bulletPointMaxWidth = maxWidth - 10;  // Deducting 10 units for right margin
+
+    const addBulletPoints = (content: string, x = 30) => {
+      const splitContent = doc.splitTextToSize("• " + content, bulletPointMaxWidth);
+      for (let i = 0; i < splitContent.length; i++) {
+        if (yPosition > pageHeight - contentBottomMargin - 10) {  // Deducting 10 units for bottom margin
+          doc.addPage();
+          yPosition = contentTopMargin; // Reset yPosition for new page
+          addHeaderFooter(); // Add header and footer for the new page
+        }
+        doc.text(splitContent[i], x, yPosition);
+        yPosition += 7;
+      }
+    };
 
     const responsibilities = [
       "Greet customers.",
@@ -92,8 +166,10 @@ const GenerateOfferLetterForm: React.FC = () => {
       "Focus on selling without looking at the commission in the product and selling the product with high commission only.",
     ];
 
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "normal");
     responsibilities.forEach((responsibility) => {
-      addContent(responsibility);
+      addBulletPoints(responsibility);
     });
 
     addContent(
@@ -104,61 +180,59 @@ const GenerateOfferLetterForm: React.FC = () => {
     );
     addContent(
       `Rule in company, the contract will be 3 years, if you do not finish the 2 years you need to pay 5000aed.`,
-      7
-    );
+      7,
+      12,
+      "normal",
+      10,
+      [255, 0, 0] // RGB for red
+    );    
     addContent(
       `${branchName} offers a comprehensive benefits program, which includes medical insurance, etc.`
     );
-    addContent(`Home Leave & Allowance`, 7);
+    addContent(`Home Leave & Allowance`, 7, 12, "normal", 10, [0, 0, 0], "center"); // Here's the change to center the text
     addContent(
       `Employee shall be entitled to 30 days home leave. Employee will receive 1000aed for leave allowance.`
     );
     addContent(`Salary details are as follows:`, 7);
-    addContent(`Basic Salary of ${basicSalaryDetails}`, 7);
-    addContent(`Nature Of Work Allowance ${workAllowance}`, 7);
-    addContent(`Cost Of Living Allowance ${livingAllowance}`, 7);
+    addContent(`Basic Salary of: ${basicSalaryDetails}`, 7);
+    addContent(`Nature Of Work Allowance: ${workAllowance}`, 7);
+    addContent(`Cost Of Living Allowance: ${livingAllowance}`, 7);
     addContent(
       `Note: This offer is for one week from the date of knowing that if you agree to work will go about work after approval 1 week.`
     );
-    addContent(`Mr. Abdulmunim Swedan`, 7);
-    addContent(`Chief Financial Officer    Signature / Date:`, 7);
-    addContent(`Awad Jamal Al Awad`, 7);
-    addContent(`Operation Manager    Signature / Date:`, 7);
-    addContent(`Laraine Kris Alcantara`, 7);
-    addContent(`Hr&Administrative    Signature / Date:`, 7);
-    addContent(`Mahmoud Ali Abdelahd Ali  Employee    Signature / Date:`, 7);
-
-    addContent(
-      `You will report directly to Branch Manager/Supervisor at ${branchName}.`
-    );
-    addContent(
-      `The starting salary for this position is ${startingSalary} after 1 month or 6 months and depending on your performance will be increased from ${increaseMinSalary} to ${increaseMaxSalary}. Payment is on a Monthly basis.`
-    );
-    addContent(
-      `Rule in company, the contract will be 3 years, if you do not finish the 2 years you need to pay 5000aed.`,
-      7
-    );
-    addContent(
-      `${branchName} offers a comprehensive benefits program, which includes medical insurance, etc.`
-    );
-    addContent(`Home Leave & Allowance`, 7);
-    addContent(
-      `Employee shall be entitled to 30 days home leave. Employee will receive 1000aed for leave allowance.`
-    );
-    addContent(`Salary details are as follows:`, 7);
-    addContent(`Basic Salary of ${basicSalaryDetails}`, 7);
-    addContent(`Nature Of Work Allowance ${workAllowance}`, 7);
-    addContent(`Cost Of Living Allowance ${livingAllowance}`, 7);
-    addContent(
-      `Note: This offer is for one week from the date of knowing that if you agree to work will go about work after approval 1 week.`
-    );
-  addContent(`Mr. Abdulmunim Swedan`, 7);
-  addContent(`Chief Financial Officer    Signature / Date:`, 7);
-  addContent(`Awad Jamal Al Awad`, 7);
-  addContent(`Operation Manager    Signature / Date:`, 7);
-  addContent(`Laraine Kris Alcantara`, 7);
-  addContent(`Hr&Administrative    Signature / Date:`, 7);
-  addContent(`Mahmoud Ali Abdelahd Ali  Employee    Signature / Date:`, 7);
+  
+    const addSignatureTable = () => {
+      const leftMargin = 10;
+      const rightMargin = maxWidth - 90;  // Adjust as needed based on the length of the longest title + "Signature / Date:"
+      const lineHeight = 7;
+      
+      const persons = [
+          {name: "Mr. Abdulmunim Swedan", title: "Chief Financial Officer"},
+          {name: "Awad Jamal Al Awad", title: "Operation Manager"},
+          {name: "Laraine Kris Alcantara", title: "Hr&Administrative"},
+          {name: candidateName, title: "Employee"}
+        ];
+  
+      for (let i = 0; i < persons.length; i++) {
+          if (yPosition > pageHeight - contentBottomMargin - 20) { // Adjust for two lines now
+              doc.addPage();
+              yPosition = contentTopMargin;
+              addHeaderFooter();
+          }
+          
+          doc.text(persons[i].name, leftMargin, yPosition);
+          yPosition += lineHeight;  // Move down one line for the title
+          doc.text(persons[i].title, leftMargin, yPosition);
+          
+          doc.text("Signature / Date:", rightMargin, yPosition);
+          
+          yPosition += lineHeight * 2;  // Double line height for spacing between rows
+      }
+  };
+  
+  addSignatureTable();
+  addHeaderFooter();
+  
 
     doc.save("OfferLetter.pdf");
 
